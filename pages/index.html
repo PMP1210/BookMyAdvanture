@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookMyAdventure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Add transition for slide-down animation */
+        .slide-down {
+            transform: translateY(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .slide-down-active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="bg-cover bg-center py-4 px-6"
+        style="background-image: url('https://thumbs.dreamstime.com/b/lake-outdoors-nature-boat-travel-water-person-landscape-river-scenic-generative-ai-vacation-journey-view-paddle-activity-season-282902392.jpg');">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Site Title -->
+            <div class="text-red text-3xl font-bold">
+                BookMyAdventure
+            </div>
+
+            <!-- Hamburger Menu -->
+            <div id="menuToggle" class="lg:hidden text-black cursor-pointer">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </div>
+
+            <!-- Navigation Links -->
+            <ul id="navLinks" class="hidden lg:flex space-x-6 text-black lg:relative">
+                <li class="hover:text-orange-500"><a href="#home">Home</a></li>
+                <li class="hover:text-orange-500"><a href="#about">About</a></li>
+                <li class="hover:text-orange-500"><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <!-- Dropdown Menu for small devices -->
+        <ul id="mobileMenu" class="lg:hidden text-black text-center space-y-4 mt-4 slide-down">
+            <li class="hover:text-orange-500"><a href="#home">Home</a></li>
+            <li class="hover:text-orange-500"><a href="#about">About</a></li>
+            <li class="hover:text-orange-500"><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto mt-10">
+        <h1 class="text-4xl text-center">Welcome to BookMyAdventure</h1>
+    </div>
+
+    <!-- JavaScript for Menu Toggle -->
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('slide-down-active');
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+
+</html>
