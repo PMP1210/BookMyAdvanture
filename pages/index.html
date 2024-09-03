@@ -7,47 +7,82 @@
     <title>BookMyAdventure</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Add transition for slide-down animation */
+        /* Slide-down animation for mobile menu */
         .slide-down {
             transform: translateY(-100%);
-            transition: transform 0.3s ease-in-out;
+            transition: transform 0.5s ease-in-out;
         }
 
         .slide-down-active {
-            transform: translateY(0);
+            transform: translateY(50%);
+        }
+
+        /* Rotate animation for hamburger icon */
+        .rotate-45 {
+            transform: rotate(45deg);
+        }
+
+        .-rotate-45 {
+            transform: rotate(-45deg);
+        }
+
+        .opacity-0 {
+            opacity: 0;
+        }
+
+        .transition-transform {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Fade-in for overlay */
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .fade-in-active {
+            opacity: 0.5;
         }
     </style>
 </head>
 
-<body>
+<body class="font-sans">
     <!-- Navbar -->
-    <nav class="bg-cover bg-center pb-80 px-6"
+    <nav class="relative bg-cover bg-center pb-80 px-6"
         style="background-image: url('https://thumbs.dreamstime.com/b/lake-outdoors-nature-boat-travel-water-person-landscape-river-scenic-generative-ai-vacation-journey-view-paddle-activity-season-282902392.jpg');">
-        <div class="container mx-auto flex justify-between items-center">
+        <div class="absolute inset-0 bg-black opacity-50"></div> <!-- Background overlay -->
+
+        <div class="container mx-auto flex justify-between items-center relative z-10">
             <!-- Site Title -->
             <div class="text-white text-3xl font-bold mt-8">
                 BookMyAdventure
             </div>
 
             <!-- Hamburger Menu -->
-            <div id="menuToggle" class="lg:hidden text-white cursor-pointer">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 6h16M4 12h16m-7 6h7"></path>
-                </svg>
+            <div id="menuToggle" class="lg:hidden text-white cursor-pointer flex flex-col items-center mt-8">
+                <div class="w-8 h-0.5 bg-white mb-1 transition-transform duration-300"></div>
+                <div class="w-8 h-0.5 bg-white mb-1 transition-transform duration-300"></div>
+                <div class="w-8 h-0.5 bg-white transition-transform duration-300"></div>
             </div>
 
             <!-- Navigation Links -->
             <ul id="navLinks" class="hidden lg:flex space-x-6 text-white lg:relative mt-8">
-                <li class="hover:text-green-300 hover:shadow-lg hover:bg-gray-400 px-0 py-3 rounded transition-shadow duration-300""><a href="#home">Home</a></li>
-                <li class="hover:text-green-300 hover:scale-110 transform transition-transform duration-300"><a href="#about">About</a></li>
-                <li class="hover:text-green-300"><a href="#contact">Contact</a></li>
+                <li
+                    class="hover:text-green-300 hover:scale-110 transform transition-transform duration-100">
+                    <a href="#home">Home</a>
+                </li>
+                <li class="hover:text-green-300 hover:scale-110 transform transition-transform duration-100">
+                    <a href="#about">About</a>
+                </li>
+                <li class="hover:text-green-300 hover:scale-110 transform transition-transform duration-100">
+                    <a href="#contact">Contact</a>
+                </li>
             </ul>
         </div>
 
         <!-- Dropdown Menu for small devices -->
-        <ul id="mobileMenu" class="lg:hidden text-white text-center space-y-4 mt-4 slide-down">
+        <div id="overlay" class="hidden fixed inset-0 bg-gray-900 fade-in z-20"></div> <!-- Overlay -->
+        <ul id="mobileMenu" class="lg:hidden text-white text-center space-y-4 mt-4 slide-down hidden relative z-30">
             <li class="hover:text-orange-500"><a href="#home">Home</a></li>
             <li class="hover:text-orange-500"><a href="#about">About</a></li>
             <li class="hover:text-orange-500"><a href="#contact">Contact</a></li>
@@ -63,10 +98,38 @@
     <script>
         const menuToggle = document.getElementById('menuToggle');
         const mobileMenu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('overlay');
+        const hamburgerBars = menuToggle.querySelectorAll('div');
+        const menuItems = mobileMenu.querySelectorAll('li');
 
-        menuToggle.addEventListener('click', () => {
+        function toggleMenu() {
             mobileMenu.classList.toggle('slide-down-active');
             mobileMenu.classList.toggle('hidden');
+            overlay.classList.toggle('fade-in-active');
+            overlay.classList.toggle('hidden');
+
+            // Hamburger icon animation
+            hamburgerBars[0].classList.toggle('rotate-45');
+            hamburgerBars[1].classList.toggle('opacity-0');
+            hamburgerBars[2].classList.toggle('-rotate-45');
+        }
+
+        menuToggle.addEventListener('click', toggleMenu);
+
+        // Close menu when a menu item is clicked
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                if (!mobileMenu.classList.contains('hidden')) {
+                    toggleMenu();
+                }
+            });
+        });
+
+        // Close menu when the overlay is clicked
+        overlay.addEventListener('click', () => {
+            if (!overlay.classList.contains('hidden')) {
+                toggleMenu();
+            }
         });
     </script>
 </body>
