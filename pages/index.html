@@ -55,13 +55,29 @@
             opacity: 1;
             transform: translateX(0);
         }
+
+        /* Fullscreen video background */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
     </style>
 </head>
 
 <body class="font-sans">
     <!-- Navbar -->
-    <nav class="relative bg-cover bg-center pb-80 px-6"
-        style="background-image: url('https://thumbs.dreamstime.com/b/lake-outdoors-nature-boat-travel-water-person-landscape-river-scenic-generative-ai-vacation-journey-view-paddle-activity-season-282902392.jpg');">
+    <nav class="relative bg-cover bg-center pb-80 px-6">
+        <!-- Video Background -->
+        <video class="video-background" autoplay muted loop>
+            <source src="..//assets/videos/beach_1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
         <div class="absolute inset-0 bg-black opacity-50"></div> <!-- Background overlay -->
 
         <div class="container mx-auto flex justify-between items-center relative z-10">
